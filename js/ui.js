@@ -12,7 +12,18 @@ const dom = {
     searchInput : document.getElementById('searchInput'),
     filterChips : document.getElementById('filterChips'),
     sortSelect : document.getElementById('sortSelect'),
+    taskToolbar : document.querySelector('.task-toolbar'),
+
+    statTotal : document.getElementById('statTotal'),
+    statCompleted : document.getElementById('statCompleted'),
+    statRemaining : document.getElementById('statRemaining'),
+    statProductivity : document.getElementById('statProductivity'), 
+
+    ringProgress : document.getElementById('ringProgress'),
+    ringValue : document.getElementById('ringValue'),
 }
+
+const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
 
 function buildTaskCard(task) {
     const card = document.createElement('article');
@@ -77,6 +88,26 @@ function renderTasks(visibleTasks){
 
 }
 
+function renderStats(tasks){
+    const total = tasks.length;
+    const completed = tasks.filter((task) => task.completed).length;
+    const remaining = total - completed;
+    const productivity = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    dom.statTotal.textContent = total;
+    dom.statCompleted.textContent = completed;
+    dom.statRemaining.textContent = remaining;
+    dom.statProductivity.textContent = `${productivity}%`;
+
+    renderRing(productivity);
+}
+
+function renderRing(percent){
+    const offset = RING_CIRCUMFERENCE * (1 - percent / 100);
+    dom.ringProgress.style.strokeDashoffset = offset;
+    dom.ringValue.textContent = `${percent}%`;
+}
+
 function populateFormForEdit(task){
     dom.taskTitle.value = task.title;
     dom.taskDescription.value = task.description;
@@ -117,8 +148,28 @@ function removeCancelEditButton(){
 }
 
 function syncFilterChips(activeFilter){
-    const chips = dom.filterChips.querySelector('.chip');
+    const chips = dom.filterChips.querySelectorAll('.chip');
     chips.forEach((chip) => {
         chip.classList.toggle('is-active', chip.dataset.filter === activeFilter);
     });
+}
+
+function ensureClearCompletedButton(){
+    let btn = document.getElementById('clearCompletedBtn');
+    if (btn) return btn;
+
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'clearCompletedBtn';
+    btn.className = 'chip';
+    btn.style.color = 'var(--danger)';
+    btn.style.borderColor = 'var(--danger-bg)';
+    btn.innerHTML = '<i class="fa-regular fa-trash-can"></i> Clear completed';
+    dom.taskToolbar.appendChild(btn);
+    return btn;
+}
+
+function toggleClearCompletedButton(hasCompletedTasks){
+    const btn = ensureClearCompletedButton();
+    btn.hidden = !hasCompletedTasks;
 }

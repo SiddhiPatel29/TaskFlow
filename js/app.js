@@ -11,14 +11,14 @@ const FILTERS = {
     completed: (task) => task.completed,
     high: (task) => task.priority === 'high',
     low: (task) => task.priority === 'low',
-}
+};
 
 const SORTERS = {
     newest: (a, b) => b.createdAt - a.createdAt,
     oldest: (a, b) => a.createdAt - b.createdAt,
     az: (a, b) => a.title.localeCompare(b.title),
     priority: (a, b) => priorityWeight(b.priority) - priorityWeight(a.priority),
-}
+};
 
 function getVisibleTasks(){
     const filterFn = FILTERS[state.filter] ?? FILTERS.all;
@@ -34,6 +34,8 @@ function getVisibleTasks(){
 function render() {
     const visibleTasks = getVisibleTasks();
     renderTasks(visibleTasks);
+    renderStats(state.tasks);
+    toggleClearCompletedButton(state.tasks.some((task) => task.completed));
 }
 
 function updateTask(id, changes) {
@@ -119,6 +121,12 @@ function toggleTaskComplete(id) {
     updateTask(id, { completed: !task.completed });
 }
 
+function clearCompletedTasks(){
+    state.tasks = state.tasks.filter((task) => !task.completed);
+    saveTasks(state.tasks);
+    render();
+}
+
 function bindEvents() {
     dom.addTaskForm.addEventListener('submit', handleAddTaskFormSubmit);
 
@@ -157,10 +165,16 @@ function bindEvents() {
         render();
     });
 
-    dom.sortSelect.addEventListener('click', (event) => {
+    dom.sortSelect.addEventListener('change', (event) => {
         state.sort = event.target.value;
         render();
-    })
+    });
+
+    dom.taskToolbar.addEventListener('click', (event) => {
+        if(event.target.closest('#clearCompletedBtn')){
+            clearCompletedTasks();
+        }
+    });
 }
 
 function init() {
