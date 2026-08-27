@@ -8,19 +8,20 @@ const dom = {
 
     taskList: document.getElementById('taskList'),
     addTaskBtn: document.querySelector('.btn-add-task'),
+    emptyState: document.getElementById('emptyState'),
 
-    searchInput : document.getElementById('searchInput'),
-    filterChips : document.getElementById('filterChips'),
-    sortSelect : document.getElementById('sortSelect'),
-    taskToolbar : document.querySelector('.task-toolbar'),
+    searchInput: document.getElementById('searchInput'),
+    filterChips: document.getElementById('filterChips'),
+    sortSelect: document.getElementById('sortSelect'),
+    taskToolbar: document.querySelector('.task-toolbar'),
 
-    statTotal : document.getElementById('statTotal'),
-    statCompleted : document.getElementById('statCompleted'),
-    statRemaining : document.getElementById('statRemaining'),
-    statProductivity : document.getElementById('statProductivity'), 
+    statTotal: document.getElementById('statTotal'),
+    statCompleted: document.getElementById('statCompleted'),
+    statRemaining: document.getElementById('statRemaining'),
+    statProductivity: document.getElementById('statProductivity'),
 
-    ringProgress : document.getElementById('ringProgress'),
-    ringValue : document.getElementById('ringValue'),
+    ringProgress: document.getElementById('ringProgress'),
+    ringValue: document.getElementById('ringValue'),
 }
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
@@ -81,14 +82,40 @@ function buildTaskCard(task) {
     return card;
 }
 
-function renderTasks(visibleTasks){
+function renderTasks(visibleTasks, hasAnyTasks) {
     dom.taskList.innerHTML = '';
+
+    if (visibleTasks.length == 0) {
+        dom.taskList.style.display = 'none';
+        renderEmptyState(hasAnyTasks);
+        return;
+    }
+
+    dom.taskList.style.display = '';
+    dom.emptyState.style.display = 'none';
 
     visibleTasks.forEach((task) => dom.taskList.appendChild(buildTaskCard(task)));
 
 }
 
-function renderStats(tasks){
+function renderEmptyState(hasAnyTasks) {
+    dom.emptyState.style.display = 'flex';
+    const heading = dom.emptyState.querySelector('h3');
+    const copy = dom.emptyState.querySelector('p');
+    const cta = dom.emptyState.querySelector('#emptyStateAddBtn');
+
+    if (hasAnyTasks) {
+        heading.textContent = 'No tasks match';
+        copy.textContent = 'Try a different search term or switch filters to see more of your list.';
+        cta.style.display = 'none';
+    } else {
+        heading.textContent = 'Your list is wide open';
+        copy.textContent = "Nothing's on the board yet - add your first task and start building momentum for today.";
+        cta.style.display = '';
+    }
+}
+
+function renderStats(tasks) {
     const total = tasks.length;
     const completed = tasks.filter((task) => task.completed).length;
     const remaining = total - completed;
@@ -102,13 +129,13 @@ function renderStats(tasks){
     renderRing(productivity);
 }
 
-function renderRing(percent){
+function renderRing(percent) {
     const offset = RING_CIRCUMFERENCE * (1 - percent / 100);
     dom.ringProgress.style.strokeDashoffset = offset;
     dom.ringValue.textContent = `${percent}%`;
 }
 
-function populateFormForEdit(task){
+function populateFormForEdit(task) {
     dom.taskTitle.value = task.title;
     dom.taskDescription.value = task.description;
     dom.taskCategory.value = task.category;
@@ -122,11 +149,11 @@ function populateFormForEdit(task){
 
     addCancelEditButton();
     dom.taskTitle.focus();
-    dom.addTaskForm.scrollIntoView?.({behavior: 'smooth', block: 'center'});
+    dom.addTaskForm.scrollIntoView?.({ behavior: 'smooth', block: 'center' });
 }
 
-function addCancelEditButton(){
-    if(document.getElementById('cancelEditBtn')) return;
+function addCancelEditButton() {
+    if (document.getElementById('cancelEditBtn')) return;
     const cancelBtn = document.createElement('button');
     cancelBtn.type = 'button';
     cancelBtn.id = 'cancelEditBtn';
@@ -135,26 +162,26 @@ function addCancelEditButton(){
     dom.addTaskBtn.insertAdjacentElement('beforebegin', cancelBtn);
 }
 
-function resetTaskForm(){
+function resetTaskForm() {
     dom.addTaskForm.reset();
     delete dom.addTaskForm.dataset.editingId;
     dom.addTaskBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add Task';
     removeCancelEditButton();
 }
 
-function removeCancelEditButton(){
+function removeCancelEditButton() {
     const cancelBtn = document.getElementById('cancelEditBtn');
-    if(cancelBtn) cancelBtn.remove();
+    if (cancelBtn) cancelBtn.remove();
 }
 
-function syncFilterChips(activeFilter){
+function syncFilterChips(activeFilter) {
     const chips = dom.filterChips.querySelectorAll('.chip');
     chips.forEach((chip) => {
         chip.classList.toggle('is-active', chip.dataset.filter === activeFilter);
     });
 }
 
-function ensureClearCompletedButton(){
+function ensureClearCompletedButton() {
     let btn = document.getElementById('clearCompletedBtn');
     if (btn) return btn;
 
@@ -169,7 +196,7 @@ function ensureClearCompletedButton(){
     return btn;
 }
 
-function toggleClearCompletedButton(hasCompletedTasks){
+function toggleClearCompletedButton(hasCompletedTasks) {
     const btn = ensureClearCompletedButton();
     btn.hidden = !hasCompletedTasks;
 }

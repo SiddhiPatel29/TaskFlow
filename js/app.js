@@ -33,7 +33,7 @@ function getVisibleTasks(){
 
 function render() {
     const visibleTasks = getVisibleTasks();
-    renderTasks(visibleTasks);
+    renderTasks(visibleTasks, state.tasks.length > 0);
     renderStats(state.tasks);
     toggleClearCompletedButton(state.tasks.some((task) => task.completed));
 }
