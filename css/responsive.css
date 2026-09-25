@@ -1,0 +1,196 @@
+/* =====================================================================
+   TaskFlow — Responsive Breakpoints
+   Desktop-first app shell that progressively collapses:
+   1400px  right panel narrows
+   1180px  right panel hides, task cards go single column
+   960px   sidebar collapses to icon rail
+   680px   sidebar becomes off-canvas, FAB appears, forms stack
+   ===================================================================== */
+
+/* ---- Large desktop: narrow the right panel slightly ---- */
+@media (max-width: 1400px) {
+    :root {
+        --right-panel-w: 260px;
+    }
+}
+
+/* ---- Tablet landscape: drop the right panel, single-column tasks ---- */
+@media (max-width: 1180px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .right-panel {
+        position: static;   
+        top: auto;
+    }
+
+    .task-list {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-section {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-side {
+        justify-content: space-between;
+    }
+}
+
+/* ---- Tablet portrait: icon-only sidebar ---- */
+@media (max-width: 960px) {
+    :root {
+        --sidebar-w: 76px;
+    }
+
+    .sidebar {
+        padding: 22px 12px;
+    }
+
+    .brand-name,
+    .nav-link span,
+    .sidebar-heading,
+    .settings-link span,
+    .user-meta {
+        display: none;
+    }
+
+    .sidebar-brand {
+        justify-content: center;
+        padding: 0 0 24px;
+    }
+
+    .nav-link,
+    .settings-link {
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .user-card {
+        justify-content: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ---- Mobile: off-canvas sidebar, stacked forms, FAB ---- */
+@media (max-width: 680px) {
+    .app-shell {
+        padding: 16px 16px 0;
+        gap: 16px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .welcome-section {
+        padding: 22px 20px;
+        border-radius: var(--radius-md);
+    }
+
+    .welcome-section h1 {
+        font-size: 22px;
+    }
+
+    .welcome-side {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+
+    .stat-value {
+        font-size: 18px;
+    }
+
+    .add-task-card {
+        padding: 18px;
+    }
+
+    .field-row {
+        flex-direction: column;
+    }
+
+    .field-row-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-add-task {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .task-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-chips {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+
+    .sort-field {
+        justify-content: space-between;
+    }
+
+    .task-card {
+        padding: 18px 18px 18px 22px;
+    }
+
+    .fab {
+        display: flex;
+    }
+
+    .main-content {
+        padding-bottom: 110px;
+    }
+}
+
+/* ---- Small phones ---- */
+@media (max-width: 400px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .welcome-section h1 {
+        font-size: 20px;
+    }
+
+    .task-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .task-menu {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}

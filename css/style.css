@@ -245,55 +245,6 @@ textarea:focus-visible {
     margin-bottom: 8px;
 }
 
-.project-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.project-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    font-size: 14px;
-    color: var(--text-secondary);
-    transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
-}
-
-.project-link:hover {
-    background: var(--bg-soft);
-    transform: translateX(2px);
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-}
-
-.dot-personal {
-    background: var(--cat-personal);
-}
-
-.dot-work {
-    background: var(--cat-work);
-}
-
-.dot-shopping {
-    background: var(--cat-shopping);
-}
-
-.project-count {
-    margin-left: auto;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-muted);
-}
-
 .sidebar-footer {
     margin-top: auto;
     padding-top: 20px;
@@ -1263,106 +1214,121 @@ textarea:focus-visible {
     box-shadow: var(--shadow-sm);
 }
 
-.calendar-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
+.goals-panel h2 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
 }
 
-.calendar-month {
-    font-weight: 700;
-    font-size: 14px;
+.add-goal-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
-.calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    row-gap: 8px;
-    text-align: center;
+.add-goal-form input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
 }
 
-.cal-row {
-    font-size: 10.5px;
-    font-weight: 700;
-    color: var(--text-muted);
-    padding-bottom: 4px;
+.add-goal-form input:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
-.cal-day {
-    font-size: 12.5px;
-    font-weight: 600;
-    padding: 6px 0;
-    border-radius: 8px;
-    color: var(--text-primary);
-    transition: background var(--duration) var(--ease);
-    cursor: default;
+.goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
-.cal-day:hover {
-    background: var(--bg-soft);
+.goal-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
 }
 
-.cal-muted {
-    color: var(--text-muted);
-    opacity: 0.55;
+.goal-delete {
+  margin-left: auto;
+  opacity: 0;
+  color: var(--text-muted);
+  transition: opacity 150ms ease, color 150ms ease;
 }
 
-.cal-today {
-    background: var(--primary-gradient);
-    color: #fff;
-    font-weight: 700;
+.goal-item:hover .goal-delete {
+  opacity: 1;
 }
 
-.deadlines-widget h2 {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 14px;
+.goal-delete:hover {
+  color: var(--danger);
 }
 
-.deadlines-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+.goal-item.is-done {
+  color: var(--text-muted);
 }
 
-.deadlines-list li {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
+.goal-item.is-done .goal-text {
+  text-decoration: line-through;
 }
 
-.deadline-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    margin-top: 5px;
-    flex-shrink: 0;
+.goal-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  flex-shrink: 0;
 }
 
-.deadline-dot-work {
-    background: var(--cat-work);
+.goal-item.is-done .goal-check {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
 }
 
-.deadline-dot-personal {
-    background: var(--cat-personal);
+.goal-item:not(.is-done) .goal-check i {
+  display: none;
 }
 
-.deadline-dot-shopping {
-    background: var(--cat-shopping);
+.goals-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.deadline-title {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.4;
+#goalsCount {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
-.deadline-time {
-    font-size: 11.5px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
+.goals-progress-track {
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-soft);
+  overflow: hidden;
 }
+
+.goals-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: var(--radius-pill);
+  transition: width 300ms ease;
+}
+
+
 
 /* ---- FLOATING ACTION BUTTON ---- */
 .fab {

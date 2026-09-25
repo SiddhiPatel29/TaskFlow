@@ -1,8 +1,9 @@
 const state = {
     tasks: [],
     search: '',
-    filter : 'all',
-    sort : 'newest',
+    filter: 'all',
+    sort: 'newest',
+    goals: [],
 }
 
 const FILTERS = {
@@ -20,7 +21,7 @@ const SORTERS = {
     priority: (a, b) => priorityWeight(b.priority) - priorityWeight(a.priority),
 };
 
-function getVisibleTasks(){
+function getVisibleTasks() {
     const filterFn = FILTERS[state.filter] ?? FILTERS.all;
     const sortFn = SORTERS[state.sort] ?? SORTERS.newest;
 
@@ -81,6 +82,37 @@ function addTask({ title, description, category, priority, dueDate }) {
     render();
 }
 
+function addGoal({ goalTitle }) {
+    const newGoal = {
+        id: generateId(),
+        text: goalTitle.trim(),
+        done: false,
+    };
+
+    state.goals = [newGoal, ...state.goals];
+    saveGoals(state.goals);
+    renderGoals(state.goals);
+}
+
+function toggleGoal(id) {
+    state.goals = state.goals.map((goal) => (goal.id === id ? { ...goal, done: !goal.done } : goal));
+    saveGoals(state.goals);
+    renderGoals(state.goals);
+}
+
+function handleAddGoalFormSubmit(event) {
+    event.preventDefault();
+
+    const goalTitle = dom.goalTitleInput.value.trim();
+    if (!goalTitle) {
+        dom.goalTitleInput.focus();
+        return;
+    }
+
+    addGoal({ goalTitle });
+    dom.addGoalForm.reset();
+}
+
 function handleAddTaskFormSubmit(event) {
     event.preventDefault();
 
@@ -121,10 +153,15 @@ function toggleTaskComplete(id) {
     updateTask(id, { completed: !task.completed });
 }
 
-function clearCompletedTasks(){
+function clearCompletedTasks() {
     state.tasks = state.tasks.filter((task) => !task.completed);
     saveTasks(state.tasks);
     render();
+}
+
+function focusAddTaskForm() {
+    dom.addTaskForm.scrollIntoView?.({ behavior: 'smooth', block: 'center' });
+    dom.taskTitle.focus();
 }
 
 function bindEvents() {
@@ -154,12 +191,12 @@ function bindEvents() {
     dom.searchInput.addEventListener('input', (event) => {
         state.search = event.target.value.trim().toLowerCase();
         render();
-        }
+    }
     );
 
     dom.filterChips.addEventListener('click', (event) => {
         const chip = event.target.closest('.chip');
-        if(!chip) return;
+        if (!chip) return;
         state.filter = chip.dataset.filter;
         syncFilterChips(state.filter);
         render();
@@ -171,10 +208,33 @@ function bindEvents() {
     });
 
     dom.taskToolbar.addEventListener('click', (event) => {
-        if(event.target.closest('#clearCompletedBtn')){
+        if (event.target.closest('#clearCompletedBtn')) {
             clearCompletedTasks();
         }
     });
+
+    dom.addGoalForm.addEventListener('submit', handleAddGoalFormSubmit);
+
+    dom.goalsList.addEventListener('click', (event) => {
+        const item = event.target.closest('.goal-item');
+        if (!item) return;
+        const id = item.dataset.id;
+
+        if (event.target.closest('[data-action="delete"]')) {
+            deleteGoal(id);
+        } else if (event.target.closest('[data-action="toggle"]')) {
+            toggleGoal(id);
+        }
+    });
+
+    dom.emptyStateAddBtn.addEventListener('click', focusAddTaskForm);
+    dom.fab.addEventListener('click', focusAddTaskForm);
+}
+
+function deleteGoal(id) {
+    state.goals = state.goals.filter((goal) => goal.id !== id);
+    saveGoals(state.goals);
+    renderGoals(state.goals);
 }
 
 function init() {
@@ -186,6 +246,14 @@ function init() {
     render();
     bindEvents();
 
+    const storedGoals = loadGoals();
+    if (storedGoals) {
+        state.goals = storedGoals;
+    }
+    renderGoals(state.goals);
+
+    renderCurrentDate();
+    syncFilterChips(state.filter);
 }
 
 document.addEventListener('DOMContentLoaded', init);

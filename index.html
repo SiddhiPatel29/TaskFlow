@@ -11,13 +11,16 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+        rel="stylesheet" />
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
 
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
@@ -34,35 +37,10 @@
                 <ul>
                     <li><a href="#" class="nav-link active"><i class="fa-solid fa-sun"></i><span>Today</span></a></li>
                     <li><a href="#" class="nav-link"><i class="fa-solid fa-calendar"></i><span>Upcoming</span></a></li>
-                    <li><a href="#" class="nav-link"><i class="fa-solid fa-circle-check"></i><span>Completed</span></a>
-                    </li>
+                    <li><a href="#" class="nav-link"><i class="fa-solid fa-circle-check"></i><span>Completed</span></a></li>
                     <li><a href="#" class="nav-link"><i class="fa-solid fa-star"></i><span>Important</span></a></li>
                 </ul>
             </nav>
-
-            <div class="sidebar-section">
-                <h2 class="sidebar-heading">Projects</h2>
-                <ul class="project-list">
-                    <li>
-                        <a href="#" class="project-link">
-                            <span class="dot dot-personal"></span>Personal
-                            <span class="project-count">14</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="project-link">
-                            <span class="dot dot-work"></span>Work
-                            <span class="project-count">14</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="project-link">
-                            <span class="dot dot-shopping"></span>Shopping
-                            <span class="project-count">13</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
 
             <div class="sidebar-footer">
                 <a href="#" class="settings-link"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
@@ -82,7 +60,7 @@
                 <!--- WELCOME SECTION --->
                 <section class="welcome-section">
                     <div class="welcome-copy">
-                        <p class="welcome-eyebrow">Sunday, August 2, 2026</p>
+                        <p class="welcome-eyebrow" id="currentDate">Sunday, August 2, 2026</p>
                         <h1 id="welcomeHeading">Good Morning Jane <span class="wave">👋</span></h1>
                         <p class="welcome-subtext">You've got a focused day ahead. Let's make it count.</p>
                     </div>
@@ -96,30 +74,6 @@
                             <div class="ring-label">
                                 <span class="ring-value" id="ringValue">51%</span>
                                 <span class="ring-caption">Done</span>
-                            </div>
-                        </div>
-
-                        <div class="goals-card">
-                            <div class="goals-head">
-                                <h2 id="goalsHeading"><i class="fa-solid fa-bullseye"></i> Today's Goals</h2>
-                                <span class="goals-count">2/3</span>
-                            </div>
-                            <ul class="goals-list">
-                                <li class="goal-item is-done">
-                                    <span class="goal-check"><i class="fa-solid fa-check"></i></span>
-                                    <span class="goal-text">Finish 3 high priority tasks</span>
-                                </li>
-                                <li class="goal-item is-done">
-                                    <span class="goal-check"><i class="fa-solid fa-check"></i></span>
-                                    <span class="goal-text">Clear the Work project backlog</span>
-                                </li>
-                                <li class="goal-item">
-                                    <span class="goal-check"><i class="fa-solid fa-check"></i></span>
-                                    <span class="goal-text">Review tomorrow's schedule</span>
-                                </li>
-                            </ul>
-                            <div class="goals-progress-track">
-                                <div class="goals-progress-fill" style="width: 66%;"></div>
                             </div>
                         </div>
                     </div>
@@ -238,7 +192,8 @@
                     <div class="task-list" id="taskList">
                         <article class="task-card">
                             <div class="task-accent"></div>
-                            <button class="task-checkbox" type="button" aria-pressed="false" aria-label="Mark 'Finalize marketing strategy' as complete">
+                            <button class="task-checkbox" type="button" aria-pressed="false"
+                                aria-label="Mark 'Finalize marketing strategy' as complete">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <div class="task-body">
@@ -265,7 +220,8 @@
                         </article>
                         <article class="task-card">
                             <div class="task-accent"></div>
-                            <button class="task-checkbox is-checked" type="button" aria-pressed="true" aria-label="Mark 'Buy groceries' as incomplete">
+                            <button class="task-checkbox is-checked" type="button" aria-pressed="true"
+                                aria-label="Mark 'Buy groceries' as incomplete">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <div class="task-body">
@@ -293,7 +249,8 @@
 
                         <article class="task-card task-card-done">
                             <div class="task-accent"></div>
-                            <button class="task-checkbox is-checked" type="button" aria-pressed="true" aria-label="Mark 'Complete presentation' as incomplete">
+                            <button class="task-checkbox is-checked" type="button" aria-pressed="true"
+                                aria-label="Mark 'Complete presentation' as incomplete">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <div class="task-body">
@@ -320,7 +277,8 @@
 
                         <article class="task-card">
                             <div class="task-accent"></div>
-                            <button class="task-checkbox" type="button" aria-pressed="false" aria-label="Mark 'Prepare presentation' as complete">
+                            <button class="task-checkbox" type="button" aria-pressed="false"
+                                aria-label="Mark 'Prepare presentation' as complete">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <div class="task-body">
@@ -346,7 +304,8 @@
 
                         <article class="task-card">
                             <div class="task-accent"></div>
-                            <button class="task-checkbox" type="button" aria-pressed="false" aria-label="Mark 'Review Q3 results' as complete">
+                            <button class="task-checkbox" type="button" aria-pressed="false"
+                                aria-label="Mark 'Review Q3 results' as complete">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <div class="task-body">
@@ -373,7 +332,8 @@
 
                         <article class="task-card">
                             <div class="task-accent"></div>
-                            <button class="task-checkbox" type="button" aria-pressed="false" aria-label="Mark 'Review groceries' as complete">
+                            <button class="task-checkbox" type="button" aria-pressed="false"
+                                aria-label="Mark 'Review groceries' as complete">
                                 <i class="fa-solid fa-check"></i>
                             </button>
                             <div class="task-body">
@@ -423,84 +383,27 @@
 
             <!--- RIGHT PANEL  --->
             <aside class="right-panel">
-                <div class="panel-card calendar-widget">
-                    <div class="calendar-head">
-                        <button class="icon-btn" type="button"><i class="fa-solid fa-chevron-left"></i></button>
-                        <span class="calendar-month">August 2026</span>
-                        <button class="icon-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                    <div class="calendar-grid">
-                        <span class="cal-row">S</span>
-                        <span class="cal-row">M</span>
-                        <span class="cal-row">T</span>
-                        <span class="cal-row">W</span>
-                        <span class="cal-row">T</span>
-                        <span class="cal-row">F</span>
-                        <span class="cal-row">S</span>
-                        <span class="cal-day cal-muted">26</span>
-                        <span class="cal-day cal-muted">27</span>
-                        <span class="cal-day cal-muted">28</span>
-                        <span class="cal-day cal-muted">29</span>
-                        <span class="cal-day cal-muted">30</span>
-                        <span class="cal-day cal-muted">31</span>
-                        <span class="cal-day">1</span>
-                        <span class="cal-day">2</span>
-                        <span class="cal-day">3</span>
-                        <span class="cal-day">4</span>
-                        <span class="cal-day">5</span>
-                        <span class="cal-day">6</span>
-                        <span class="cal-day">7</span>
-                        <span class="cal-day">8</span>
-                        <span class="cal-day">9</span>
-                        <span class="cal-day">10</span>
-                        <span class="cal-day">11</span>
-                        <span class="cal-day">12</span>
-                        <span class="cal-day">13</span>
-                        <span class="cal-day">14</span>
-                        <span class="cal-day">15</span>
-                        <span class="cal-day">16</span>
-                        <span class="cal-day cal-today">17</span>
-                        <span class="cal-day">18</span>
-                        <span class="cal-day">19</span>
-                        <span class="cal-day">20</span>
-                        <span class="cal-day">21</span>
-                        <span class="cal-day">22</span>
-                        <span class="cal-day">23</span>
-                        <span class="cal-day">24</span>
-                        <span class="cal-day">25</span>
-                        <span class="cal-day">26</span>
-                        <span class="cal-day">27</span>
-                        <span class="cal-day">28</span>
-                        <span class="cal-day">29</span>
+
+                <div class="panel-card goals-panel">
+                    <h2>Today's Goals</h2>
+
+                    <form id="addGoalForm" class="add-goal-form">
+                        <input type="text" id="goalTitleInput" placeholder="Add a goal..." required />
+                        <button type="submit" class="icon-btn" aria-label="Add goal">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+
+                    <ul class="goal-list" id="goalsList"></ul>
+
+                    <div class="goals-footer">
+                        <span id="goalsCount"></span>
+                        <div class="goals-progress-track">
+                            <div class="goals-progress-fill" id="goalsProgressFill"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="panel-card deadlines-widget">
-                    <h2>Upcoming Deadlines</h2>
-                    <ul class="deadlines-list">
-                        <li>
-                            <span class="deadline-dot deadline-dot-work"></span>
-                            <div>
-                                <p class="deadline-title">Funding round, close out</p>
-                                <span class="deadline-time">26 hours left</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="deadline-dot deadline-dot-personal"></span>
-                            <div>
-                                <p class="deadline-title">Planning session with team</p>
-                                <span class="deadline-time">20 hours left</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="deadline-dot deadline-dot-shopping"></span>
-                            <div>
-                                <p class="deadline-title">Tomorrow's weekly review</p>
-                                <span class="deadline-time">12 hours left</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </aside>
         </div>
     </div>

@@ -9,6 +9,7 @@ const dom = {
     taskList: document.getElementById('taskList'),
     addTaskBtn: document.querySelector('.btn-add-task'),
     emptyState: document.getElementById('emptyState'),
+    emptyStateAddBtn: document.getElementById('emptyStateAddBtn'),
 
     searchInput: document.getElementById('searchInput'),
     filterChips: document.getElementById('filterChips'),
@@ -22,6 +23,16 @@ const dom = {
 
     ringProgress: document.getElementById('ringProgress'),
     ringValue: document.getElementById('ringValue'),
+
+    addGoalForm: document.getElementById('addGoalForm'),
+    goalTitleInput: document.getElementById('goalTitleInput'),
+    goalsList: document.getElementById('goalsList'),
+    goalsCount: document.getElementById('goalsCount'),
+    goalsProgressFill: document.getElementById('goalsProgressFill'),
+
+    currentDate: document.getElementById('currentDate'),
+
+    fab: document.getElementById('fabAddTask'),
 }
 
 const RING_CIRCUMFERENCE = 2 * Math.PI * 52;
@@ -199,4 +210,32 @@ function ensureClearCompletedButton() {
 function toggleClearCompletedButton(hasCompletedTasks) {
     const btn = ensureClearCompletedButton();
     btn.hidden = !hasCompletedTasks;
+}
+
+function renderGoals(goals) {
+    dom.goalsList.innerHTML = '';
+
+    goals.forEach((goal) => {
+        const item = document.createElement('li');
+        item.className = 'goal-item';
+        item.dataset.id = goal.id;
+        if (goal.done) item.classList.add('is-done');
+        item.innerHTML = `
+            <span class="goal-check" data-action="toggle"><i class="fa-solid fa-check"></i></span>
+            <span class="goal-text">${escapeHtml(goal.text)}</span>
+            <button type="button" class="goal-delete" data-action="delete" aria-label="Delete goal">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+        `;
+        dom.goalsList.appendChild(item);
+    })
+
+    const doneCount = goals.filter((goal) => goal.done).length;
+    dom.goalsCount.textContent = `${doneCount}/${goals.length}`;
+    const percent = goals.length === 0 ? 0 : Math.round((doneCount / goals.length) * 100);
+    dom.goalsProgressFill.style.width = `${percent}%`;
+}
+
+function renderCurrentDate() {
+    dom.currentDate.textContent = formatFullDate();
 }

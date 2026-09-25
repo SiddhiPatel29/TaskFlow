@@ -31,6 +31,15 @@ function formatDueDate(isoDate){
     return date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
 }
 
+function formatFullDate(date = new Date()){
+    return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+}
+
 function escapeHtml(text){
     const div = document.createElement('div');
     div.textContent = text ?? '';
